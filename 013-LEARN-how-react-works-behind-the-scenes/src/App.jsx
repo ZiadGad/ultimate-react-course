@@ -69,13 +69,32 @@ function TabContent({ item }) {
   console.log("RENDER");
 
   function handleInc() {
-    setLikes(likes + 1);
+    // setLikes(likes + 1);
+    setLikes((likes) => likes + 1);
+  }
+
+  function handleTripleInc() {
+    // setLikes(likes + 1);
+    // setLikes(likes + 1);
+    // setLikes(likes + 1);
+
+    setLikes((likes) => likes + 1); // with callback function we get access to the latest "updated state"
+    setLikes((likes) => likes + 1);
+    setLikes((likes) => likes + 1);
+
+    // handleInc();
+    // handleInc();
+    // handleInc();
   }
 
   function handleUndo() {
     setShowDetails(true);
     setLikes(0); //updated after the re-render
     console.log(likes);
+  }
+
+  function handleUndoLater() {
+    setTimeout(handleUndo, 2000); // Prove that in React 18+ batching happens not only inside event handlers
   }
 
   return (
@@ -91,13 +110,13 @@ function TabContent({ item }) {
         <div className="hearts-counter">
           <span>{likes} ❤️</span>
           <button onClick={handleInc}>+</button>
-          <button>+++</button>
+          <button onClick={handleTripleInc}>+++</button>
         </div>
       </div>
 
       <div className="tab-undo">
         <button onClick={handleUndo}>Undo</button>
-        <button>Undo in 2s</button>
+        <button onClick={handleUndoLater}>Undo in 2s</button>
       </div>
     </div>
   );
